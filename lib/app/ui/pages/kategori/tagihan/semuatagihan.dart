@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:gostrada/app/ui/pages/kategori/tagihan/va/preview_pembayaran.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 import '../../../../controllers/tagihan_c.dart';
@@ -45,6 +46,11 @@ class SemuaTagihanPage extends StatelessWidget {
         future: controller.loadsemuatagihan(data["nim"]),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
+            controllers.clear();
+            for (var i = 0; i < snapshot.data.data!.length; i++) {
+              controllers.add(TextEditingController(
+                  text: (snapshot.data.data[i].nominal).toString()));
+            }
             return GetBuilder<TagihanController>(
               init: TagihanController(),
               initState: (_) {
@@ -55,8 +61,8 @@ class SemuaTagihanPage extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: _.datadatum.length,
                   itemBuilder: (BuildContext context, int index) {
-                    controllers.add(TextEditingController(
-                        text: (_.datadatum[index].nominal).toString()));
+                    // controllers.add(TextEditingController(
+                    //     text: (_.datadatum[index].nominal).toString()));
                     controllers2.add(TextEditingController());
                     isVisible.add(false);
                     return Padding(
@@ -77,15 +83,15 @@ class SemuaTagihanPage extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  controllers[index].text = "0";
                                   controller.totaltagihan.value = 0;
+
+                                  controllers.removeAt(index);
+                                  //controllers[index].dispose();
+                                  _.datadatum.removeAt(index);
                                   for (var i = 0; i < _.datadatum.length; i++) {
                                     controller.totaltagihan.value +=
-                                        int.tryParse(controllers[i].text) ?? 0;
+                                        int.parse(controllers[i].text);
                                   }
-                                  _.datadatum.removeAt(index);
-
-                                  print(index);
                                   _.update();
                                   print("ini length ${_.datadatum.length}");
                                 },
@@ -309,6 +315,7 @@ class SemuaTagihanPage extends StatelessWidget {
                 //                required this.bayar,
                 // required this.idBiaya,
                 // required this.idCredit,
+
                 List<String> bayarlist = [];
                 List<String> idBiayalist = [];
                 List<String> idCreditlist = [];

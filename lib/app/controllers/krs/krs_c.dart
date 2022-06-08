@@ -9,41 +9,40 @@ class KrsController extends GetxController {
   late Map data = box.read("dataUser") as Map<String, dynamic>;
   final String masterKRS =
       'https://sia.iik-strada.ac.id/mobile/Data/master_krs';
-  
+
   var dataMasterKrs;
   var isLoading = true.obs;
   var loaderVisible = false.obs;
   var semester = "0";
   var nim = "0";
-  
-  
+}
   
   
   
 
-  @override
-  void onInit() async {
-    // TODO: implement onInit
+  
+  // void onInit() async {
+  //   // TODO: implement onInit
 
-    super.onInit();
-    final Map<String, dynamic> dataBody = {
-      "nim": data['nim'],
-    };
+  //   super.onInit();
+  //   final Map<String, dynamic> dataBody = {
+  //     "nim": data['nim'],
+  //   };
 
-    //http request post
-    var response = await http.post(Uri.parse(masterKRS), body: dataBody);
-    if (response.statusCode == 200) {
-      var user = jsonDecode(response.body);
-      if (user['error'] == true) {
-        //
-      } else {
-        // load berhasil
-        dataMasterKrs = MasterKrsModel.fromJson(jsonDecode(response.body));
-        print('load master krs berhasil');
-      }
-      isLoading.value = false;
-    }
-  }
+  //   //http request post
+  //   var response = await http.post(Uri.parse(masterKRS), body: dataBody);
+  //   if (response.statusCode == 200) {
+  //     var user = jsonDecode(response.body);
+  //     if (user['error'] == true) {
+  //       //
+  //     } else {
+  //       // load berhasil
+  //       dataMasterKrs = MasterKrsModel.fromJson(jsonDecode(response.body));
+  //       print('load master krs berhasil');
+  //     }
+  //     isLoading.value = false;
+  //   }
+  // }
 
  
 
@@ -66,4 +65,4 @@ class KrsController extends GetxController {
 
   //   print(response.statusCode);
   // }
-}
+

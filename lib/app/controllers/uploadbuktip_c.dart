@@ -124,7 +124,7 @@ class UploadBuktiController extends GetxController {
 
   postbukti(image, String nim, String idperiode, String CodeTransaksi,
       String nominal_id) async {
-    print(idperiode);
+    print(nominal_id);
     File file = File(image.path);
     var request = http.MultipartRequest(
         'POST',
@@ -148,15 +148,17 @@ class UploadBuktiController extends GetxController {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
+      Get.snackbar('Upload Bukti Berhasil',
+          'Silahkan Dicek pada menu Upload Bukti Bayar');
     } else {
       print(response.reasonPhrase);
     }
   }
 
-  LihatBukti(String nim, String CodeTransaksi) async {
+  LihatBukti(String nim, String code) async {
     final Map<String, dynamic> dataBody = {
       LihatBuktiM.nim: nim,
-      LihatBuktiM.code_trans: CodeTransaksi,
+      LihatBuktiM.code_trans: code,
     };
     var response = await http.post(
         Uri.parse("https://sia.iik-strada.ac.id/mobile/keuangan/lihat_bukti"),
@@ -173,7 +175,7 @@ class UploadBuktiController extends GetxController {
       //result2['data'].map((data) => DataModel.fromJson(data)).toList();
       // print(result2);
       if (databody['error'] == true) {
-        //show error
+        print("error");
         return null;
       } else {
         var result = LihatBuktiModel.fromJson(databody);

@@ -20,5 +20,12 @@ class UnduhBukti {
 
 class LihatBuktiM {
   static String nim = "nim";
-  static String code_trans = 'code';
+  static String code_trans = 'code_trans';
+}
+
+class CodeVA {
+  static String nim = 'nim';
+  static String total_payment = 'total_payment';
+  static String name = 'name';
+  static String code_trans = 'code_trans';
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:gostrada/app/ui/pages/kategori/riwayat_bayar/detailtransaksi/pdfview.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -149,7 +150,8 @@ class RiwayatBayarController extends GetxController {
           var file = File(place).openSync(mode: FileMode.write);
           file.writeFromSync(response.data);
           await file.close();
-
+          Get.to(MyPage(), arguments: place);
+          //PDFDocument doc = await PDFDocument.fromURL();
           //Pspdfkit.present(place);
           // Here, you're catching an error and printing it. For production
           // apps, you should display the warning to the user and give them a

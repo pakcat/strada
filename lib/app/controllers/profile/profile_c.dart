@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:gostrada/app/data/models/masterkrs_m.dart';
 import 'package:http/http.dart' as http;
 
-class ProfileController extends GetxController{
+class ProfileController extends GetxController {
   final box = GetStorage();
   late Map data = box.read("dataUser") as Map<String, dynamic>;
   final String urlPhoto = 'https://sia.iik-strada.ac.id/uploads/mhs/';
@@ -15,7 +15,6 @@ class ProfileController extends GetxController{
   var dataMasterKrs;
   var isLoading = true.obs;
   var user;
-  
 
   @override
   void onInit() async {
@@ -41,5 +40,4 @@ class ProfileController extends GetxController{
       isLoading.value = false;
     }
   }
-
 }

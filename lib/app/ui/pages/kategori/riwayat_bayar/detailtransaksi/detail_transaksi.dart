@@ -402,8 +402,9 @@ class DetailTransaksi extends StatelessWidget {
           onPressed: () async {
             final dir = await getExternalStorageDirectory();
             final directory = await getTemporaryDirectory();
-            c.download(
-                Dio(), c.codepembayaran, dir!.path + "_BuktiPembayaran.pdf");
+            c.download(Dio(), c.codepembayaran,
+                directory.path + "_BuktiPembayaran.pdf");
+
             //c.Unduh(directory.path + "hai.pdf");
           },
           style: ElevatedButton.styleFrom(
@@ -419,7 +420,7 @@ class DetailTransaksi extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10),
           ),
           child: Text(
-            'Unduh Bukti',
+            'Lihat Bukti',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
         ),

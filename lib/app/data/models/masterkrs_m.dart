@@ -10,19 +10,19 @@ class MasterKrsModel {
     //required this.semester,
   });
 
-  String nim;
-  String name;
-  String angkatan;
+  String? nim;
+  String? name;
+  String? angkatan;
   dynamic fakultas;
-  String prodi;
+  String? prodi;
   //String semester;
 
   factory MasterKrsModel.fromJson(Map<String, dynamic> json) => MasterKrsModel(
-        nim: json["nim"],
-        name: json["name"],
-        angkatan: json["angkatan"],
+        nim: json["nim"] == null ? null : json["nim"],
+        name: json["nama"] == null ? null : json["nim"],
+        angkatan: ["angkatan"] == null ? null : json["angkatan"],
         fakultas: json["fakultas"],
-        prodi: json["prodi"],
+        prodi: ["prodi"] == null ? null : json["prodi"],
         //semester: json["semester"],
       );
 }

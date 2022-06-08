@@ -75,7 +75,7 @@ class ProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Text(
-                                    x.user['name'],
+                                    "nama",
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Text(
-                                    x.user['nim'],
+                                    "nim",
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -123,7 +123,7 @@ class ProfilePage extends StatelessWidget {
                                       maxWidth: size.width / 1.5,
                                     ),
                                     child: AutoSizeText(
-                                      x.user['prodi'],
+                                      "x.user['prodi']",
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,

@@ -283,7 +283,7 @@ class Datumm {
   final int nominal;
   final int bayar;
   final int idBiaya;
-  final int idCredit;
+  final String idCredit;
   final int semester;
   final int type;
 
@@ -342,5 +342,26 @@ class SaveTagihanModel {
         "error": error,
         "code_trans": codeTrans,
         "pesan": pesan,
+      };
+}
+
+class CodeVaModel {
+  CodeVaModel({
+    required this.error,
+    required this.virtualAccount,
+  });
+
+  final bool error;
+  final String? virtualAccount;
+
+  factory CodeVaModel.fromJson(Map<String, dynamic> json) => CodeVaModel(
+        error: json["error"] == null ? null : json["error"],
+        virtualAccount:
+            json["virtual_account"] == null ? null : json["virtual_account"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "error": error == null ? null : error,
+        "virtual_account": virtualAccount == null ? null : virtualAccount,
       };
 }

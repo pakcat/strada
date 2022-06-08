@@ -32,6 +32,7 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
   String? selectedValue1;
   String? selec;
   String? selecc;
+  int? jumlah;
   String selectedValue2 = "text";
   var index;
   @override
@@ -126,19 +127,36 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
                       FutureBuilder<dynamic>(
                           future: controller.getnominal(selectedValue2),
                           builder: (context, snapshot) {
-                            return TextField(
-                              controller: controller.txt,
-                              decoration: InputDecoration(
-                                enabled: false,
-                                filled: true,
-                                fillColor: HexColor("#F3F3F3"),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4.sp),
-                                  borderSide: const BorderSide(
-                                      color: Colors.transparent, width: 2.0),
+                            if (snapshot.hasData) {
+                              jumlah = snapshot.data.total;
+                              return TextField(
+                                controller: controller.txt,
+                                decoration: InputDecoration(
+                                  enabled: false,
+                                  filled: true,
+                                  fillColor: HexColor("#F3F3F3"),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.sp),
+                                    borderSide: const BorderSide(
+                                        color: Colors.transparent, width: 2.0),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            } else {
+                              return TextField(
+                                controller: controller.txt,
+                                decoration: InputDecoration(
+                                  enabled: false,
+                                  filled: true,
+                                  fillColor: HexColor("#F3F3F3"),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.sp),
+                                    borderSide: const BorderSide(
+                                        color: Colors.transparent, width: 2.0),
+                                  ),
+                                ),
+                              );
+                            }
                           }),
                       SizedBox(
                         height: 10.sp,
@@ -213,13 +231,21 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
         margin: EdgeInsets.only(bottom: 20),
         child: ElevatedButton(
           onPressed: () {
-            controller.postbukti(
-                image,
-                data['nim'],
-                controller.idperiode[index],
-                selectedValue2,
-                controller.txt.toString());
-            Get.offAllNamed(RoutName.root);
+            if (image != null &&
+                controller.idperiode[index] != null &&
+                selectedValue2 != null &&
+                jumlah != null) {
+              print(controller.txt);
+              controller.postbukti(
+                  image,
+                  data['nim'],
+                  controller.idperiode[index],
+                  selectedValue2,
+                  jumlah.toString());
+              Get.offAllNamed(RoutName.root);
+            } else {
+              Get.snackbar('Go Strada', 'Mohon Lengkapi Formulir');
+            }
           },
           style: ElevatedButton.styleFrom(
             primary: DataColors.primary, // background

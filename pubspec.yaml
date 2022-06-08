@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  
   auto_size_text: ^3.0.0
   cached_network_image: ^3.2.1
   carousel_slider: ^4.0.0
@@ -37,6 +38,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_downloader: ^1.8.0+1
+  flutter_pdfview: ^1.2.2
   flutter_svg: ^1.0.3
   flutter_svg_provider: ^1.0.3
   get: ^4.6.5
@@ -47,6 +49,7 @@ dependencies:
   introduction_screen: ^3.0.2
   path_provider: ^2.0.11
   permission_handler: ^9.2.0
+  qr_flutter: ^4.0.0
   responsive_grid: ^2.0.0
   sizer: ^2.0.15
   splashscreen: ^1.3.5

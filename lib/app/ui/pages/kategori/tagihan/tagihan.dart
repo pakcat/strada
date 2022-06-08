@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostrada/app/controllers/tagihan_c.dart';
 import 'package:gostrada/app/data/models/tagihan_m.dart';
-import 'package:gostrada/app/ui/pages/kategori/tagihan/jenistagihan.dart';
 import 'package:gostrada/app/ui/pages/kategori/tagihan/semuatagihan.dart';
+import 'package:gostrada/app/ui/pages/kategori/tagihan/va/preview_pembayaran.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
@@ -195,15 +195,29 @@ class TagihanPage extends StatelessWidget {
                                   snapshot.data.tagihanActive.data.length,
                               shrinkWrap: true,
                               itemBuilder: (BuildContext context, int index) {
-                                return TagihanExpired(
-                                    codeTrans: snapshot.data.tagihanActive
-                                        .data[index].codeTrans,
-                                    nominal: snapshot
-                                        .data.tagihanActive.data[index].nominal,
-                                    tanggaldibuat: snapshot.data.tagihanActive
-                                        .data[index].tanggalDibuat,
-                                    tanggalexpired: snapshot.data.tagihanActive
-                                        .data[index].tanggalExpired);
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(PreviewPembayaranPage(), arguments: [
+                                      snapshot.data.tagihanActive.data[index]
+                                          .codeTrans,
+                                      (snapshot.data.tagihanActive.data[index]
+                                              .nominal)
+                                          .toString()
+                                    ]);
+                                  },
+                                  child: TagihanExpired(
+                                      codeTrans: snapshot.data.tagihanActive
+                                          .data[index].codeTrans,
+                                      nominal: snapshot.data.tagihanActive
+                                          .data[index].nominal,
+                                      tanggaldibuat: snapshot.data.tagihanActive
+                                          .data[index].tanggalDibuat,
+                                      tanggalexpired: snapshot
+                                          .data
+                                          .tagihanActive
+                                          .data[index]
+                                          .tanggalExpired),
+                                );
                               },
                             ),
                           )

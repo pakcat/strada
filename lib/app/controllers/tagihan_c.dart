@@ -4,10 +4,12 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:gostrada/app/data/models/bankmodel.dart';
 import 'package:gostrada/app/data/models/tagihan_m.dart';
 import 'package:http/http.dart' as http;
 
 import '../data/models/test_m.dart';
+import '../ui/pages/kategori/tagihan/va/preview_pembayaran.dart';
 
 class TagihanController extends GetxController {
   RxInt totaltagihan = 0.obs;
@@ -169,14 +171,7 @@ class TagihanController extends GetxController {
         for (var i = 0; i < result.data!.length; i++) {
           datadatum.add(result.data![i]);
         }
-        for (var i = 0; i < result.data!.length; i++) {
-          controllers.add(
-              TextEditingController(text: (datadatum[i].nominal).toString()));
-          controllers2.add(TextEditingController());
-        }
-
-        print(data[0].data!.length);
-        print(result.data!.length);
+        print(response.body);
 
         update();
         return result;
@@ -190,26 +185,82 @@ class TagihanController extends GetxController {
   }
 
   confirmtagihan(nim, id_biaya, id_credit, bayar) async {
-    var request = http.MultipartRequest('POST',
-        Uri.parse('https://sia.iik-strada.ac.id/mobile/keuangan/save_tagihan'));
-    request.fields.addAll({
-      'nim': nim,
-      'id_biaya': id_biaya,
-      'id_credit': id_credit,
-      'bayar': bayar
-    });
-
-    http.StreamedResponse response = await request.send();
+    final Map<String, dynamic> dataBody = {
+      BuatTagihan.nim: nim,
+      BuatTagihan.id_biaya: id_biaya,
+      BuatTagihan.id_credit: id_credit,
+      BuatTagihan.bayar: bayar,
+    };
+    print("id_biaya $id_biaya");
+    print("id_credit $id_credit");
+    var response = await http.post(
+        Uri.parse("https://sia.iik-strada.ac.id/mobile/keuangan/save_tagihan"),
+        body: dataBody);
 
     if (response.statusCode == 200) {
-      // var databody = jsonDecode(await response.stream.bytesToString());
-      //var result = SaveTagihanModel.fromJson(databody);
+      var databody = jsonDecode(response.body);
 
-      print(await response.stream.bytesToString());
-      Get.snackbar('Hi', 'Tagihan Berhasil Disimpan');
-      //Get.snackbar('${result.pesan}', "${result.codeTrans}");
-    } else {
-      print(response.reasonPhrase);
+      if (databody['error'] == true) {
+        //show error
+        return null;
+      } else {
+        var result = SaveTagihanModel.fromJson(databody);
+        Get.snackbar('Hi', 'Tagihan Berhasil Disimpan');
+        print(result.codeTrans);
+        Get.to(PreviewPembayaranPage(),
+            arguments: [result.codeTrans, totaltagihan]);
+      }
+    }
+  }
+
+  getva(
+      String nim, String total_payment, String name, String code_trans) async {
+    final Map<String, dynamic> dataBody = {
+      CodeVA.nim: nim,
+      CodeVA.total_payment: total_payment,
+      CodeVA.name: name,
+      CodeVA.code_trans: code_trans,
+    };
+    print(nim);
+    print(total_payment);
+    print(name);
+    print(code_trans);
+    var response = await http.post(
+        Uri.parse(
+            "https://sia.iik-strada.ac.id/mobile/payment/create_ecollection"),
+        body: dataBody);
+
+    if (response.statusCode == 200) {
+      var databody = jsonDecode(response.body);
+
+      if (databody['error'] == true) {
+        //show error
+        print(response.body);
+        return null;
+      } else {
+        var result = CodeVaModel.fromJson(databody);
+        print(response.body);
+        return result;
+      }
+    }
+  }
+
+  DataBank() async {
+    var response = await http.get(
+        Uri.parse("https://sia.iik-strada.ac.id/mobile/keuangan/get_bank"));
+
+    if (response.statusCode == 200) {
+      var databody = jsonDecode(response.body);
+
+      if (databody['error'] == true) {
+        //show error
+        print(response.body);
+        return null;
+      } else {
+        var result = BankModel.fromJson(databody);
+        print(response.body);
+        return result;
+      }
     }
   }
 }
