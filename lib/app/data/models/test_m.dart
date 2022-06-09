@@ -29,3 +29,14 @@ class CodeVA {
   static String name = 'name';
   static String code_trans = 'code_trans';
 }
+
+class GetSks {
+  static String nim = 'nim';
+  static String semester = 'semester';
+}
+
+class InputPenawaran {
+  static String nim = 'nim';
+  static String semester = 'semester';
+  static String accept = 'accept';
+}

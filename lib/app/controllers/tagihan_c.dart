@@ -201,7 +201,7 @@ class TagihanController extends GetxController {
       var databody = jsonDecode(response.body);
 
       if (databody['error'] == true) {
-        //show error
+        print(response.body);
         return null;
       } else {
         var result = SaveTagihanModel.fromJson(databody);
