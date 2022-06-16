@@ -15,20 +15,20 @@ class SplashPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
+            const Align(
               alignment: Alignment.center,
               child: Image(
                 image: AssetImage('assets/images/logo/iiklogo.png'),
                 height: 80,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 140),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
                   backgroundColor: DataColors.primary700,
                   valueColor: AlwaysStoppedAnimation(

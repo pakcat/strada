@@ -2,7 +2,6 @@
 //
 //     final getTpModel = getTpModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 GetTpModel getTpModelFromJson(String str) =>

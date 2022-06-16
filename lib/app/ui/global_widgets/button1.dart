@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
-import '../../routes/rout_name.dart';
 import '../theme/color.dart';
 
 class dashboardbutton extends StatelessWidget {
@@ -23,13 +22,13 @@ class dashboardbutton extends StatelessWidget {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     color: DataColors.blusky,
                     borderRadius: BorderRadius.circular(30)),
                 child: SvgPicture.asset(
                     'assets/images/dashboard/icon/penawarankrs.svg')),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -40,7 +39,7 @@ class dashboardbutton extends StatelessWidget {
                   color: DataColors.primary700),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
           ],

@@ -5,18 +5,19 @@ import 'package:gostrada/app/routes/rout_name.dart';
 import 'package:gostrada/app/ui/pages/kategori/upload_bukti_bayar/tambahpembayaran/tp.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:intl/intl.dart';
 import '../../../../controllers/uploadbuktip_c.dart';
 
 class UploadBuktiBayarPage extends StatelessWidget {
-  @override
   UploadBuktiController controller = Get.put(UploadBuktiController());
   final box = GetStorage();
+
+  @override
   Widget build(BuildContext context) {
     Map data = box.read("dataUser") as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Data Pembayaran',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -40,31 +41,36 @@ class UploadBuktiBayarPage extends StatelessWidget {
         child: FutureBuilder<dynamic>(
             future: controller.UBB(data['nim']),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemCount: snapshot.data.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return uploadbuktibayar(
-                        name: snapshot.data.data[index].name,
-                        status: snapshot.data.data[index].isConfirm,
-                        kodep: snapshot.data.data[index].codeTrans,
-                        nim: snapshot.data.data[index].nim,
-                        periode: snapshot.data.data[index].periode,
-                        nominal: snapshot.data.data[index].nominal,
-                        index: index);
-                  },
-                );
-              } else {
-                return Center(child: Text("Tidak Ada Data"));
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator());
+                default:
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: snapshot.data.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return uploadbuktibayar(
+                            name: snapshot.data.data[index].name,
+                            status: snapshot.data.data[index].isConfirm,
+                            kodep: snapshot.data.data[index].codeTrans,
+                            nim: snapshot.data.data[index].nim,
+                            periode: snapshot.data.data[index].periode,
+                            nominal: snapshot.data.data[index].nominal,
+                            index: index);
+                      },
+                    );
+                  } else {
+                    return const Center(child: Text("Tidak Ada Data"));
+                  }
               }
             }),
       ),
       bottomNavigationBar: Container(
         color: Colors.transparent,
-        padding: EdgeInsets.symmetric(horizontal: 40),
-        margin: EdgeInsets.only(bottom: 20, top: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        margin: const EdgeInsets.only(bottom: 20, top: 10),
         child: ElevatedButton(
           onPressed: () {
             Get.to(TambahPembayaranPage());
@@ -76,7 +82,7 @@ class UploadBuktiBayarPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(14.0),
             ),
           ),
-          child: Text(
+          child: const Text(
             'Tambah Pembayaran',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -107,6 +113,7 @@ class uploadbuktibayar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
     return Padding(
       padding: EdgeInsets.only(bottom: 12.sp),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -122,17 +129,26 @@ class uploadbuktibayar extends StatelessWidget {
               Row(
                 children: [
                   ImageIcon(
-                    AssetImage("assets/icon/student.png"),
+                    const AssetImage("assets/icon/student.png"),
                     color: DataColors.primary400,
                   ),
                   SizedBox(
                     width: 5.sp,
                   ),
-                  Text(name, style: TextStyle(color: DataColors.primary800))
+                  Row(
+                    children: [
+                      Text(name,
+                          style: TextStyle(color: DataColors.primary800)),
+                      SizedBox(
+                        width: 10.sp,
+                      ),
+                      Text(nim, style: TextStyle(color: DataColors.primary800)),
+                    ],
+                  )
                 ],
               ),
               Container(
-                  padding: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: DataColors.primary700,
@@ -141,7 +157,7 @@ class uploadbuktibayar extends StatelessWidget {
                     (status == "1")
                         ? "Telah dikonfirmasi"
                         : " Belum dikonfirmasi",
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   )),
             ],
           ),
@@ -151,7 +167,7 @@ class uploadbuktibayar extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                padding: EdgeInsets.all(4),
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: DataColors.primary),
@@ -166,8 +182,7 @@ class uploadbuktibayar extends StatelessWidget {
               SizedBox(
                 width: 5.sp,
               ),
-              Text("$nim | $periode",
-                  style: TextStyle(color: DataColors.primary400))
+              Text("$periode", style: TextStyle(color: DataColors.primary400))
             ],
           ),
         ),
@@ -191,7 +206,7 @@ class uploadbuktibayar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                nominal,
+                formatCurrency.format(int.tryParse(nominal)),
                 style: TextStyle(
                     fontSize: 12.sp,
                     color: DataColors.primary800,

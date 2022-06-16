@@ -8,11 +8,13 @@ import 'package:sizer/sizer.dart';
 import '../../../../routes/rout_name.dart';
 
 class KategoriPage extends StatelessWidget {
+  const KategoriPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kategori'),
+        title: const Text('Kategori'),
         backgroundColor: Colors.white,
         foregroundColor: DataColors.primary700,
         leading: Builder(
@@ -42,13 +44,13 @@ class KategoriPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/tagihan.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -59,7 +61,7 @@ class KategoriPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -74,13 +76,13 @@ class KategoriPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/riwayatbayar.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -91,7 +93,7 @@ class KategoriPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -106,13 +108,13 @@ class KategoriPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/uploadbuktibayar.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -123,7 +125,7 @@ class KategoriPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -138,13 +140,13 @@ class KategoriPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/bayarwisuda.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -155,7 +157,7 @@ class KategoriPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -170,14 +172,14 @@ class KategoriPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                             'assets/images/dashboard/icon/pengajuankeringanan.svg',
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -188,7 +190,7 @@ class KategoriPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],

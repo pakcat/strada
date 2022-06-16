@@ -32,8 +32,9 @@ class AuthController extends GetxController {
         // if username not match
         isLoading.value = false;
         errorMsg.value = true;
+        Get.offNamed(RoutName.login);
+        return "salah";
       } else {
-        print(user);
         // login berhasil
         box.value.write('dataUser', {
           "username": user['nim'],
@@ -42,13 +43,14 @@ class AuthController extends GetxController {
           "photo": user['photo'],
           "name": user['name'],
         });
-        print('login berhasil, data disimpan');
         isLoading.value = false;
         // go to dashboard page
         Get.offNamed(RoutName.root);
+        return user;
       }
     } else {
       Get.snackbar('Hi', 'Koneksi Error');
+      return null;
     }
   }
 

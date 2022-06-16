@@ -9,16 +9,16 @@ import '../../../../../controllers/tagihan_c.dart';
 import '../../../../theme/color.dart';
 
 class BankPage extends StatelessWidget {
-  @override
   TagihanController controller = Get.put(TagihanController());
   DetailTransaksiController c = Get.put(DetailTransaksiController());
+  @override
   Widget build(BuildContext context) {
     bool isvisible = false;
     bool isvisible1 = false;
     var index = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Transfer Bank',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -45,100 +45,108 @@ class BankPage extends StatelessWidget {
           FutureBuilder<dynamic>(
               future: controller.DataBank(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10.sp),
-                        height: 1.5.sp,
-                        width: 100.w,
-                        color: DataColors.Neutral200,
-                      ),
-                      Row(
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot.hasData) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              margin:
-                                  EdgeInsets.only(left: 20.sp, right: 10.sp),
-                              height: 30.sp,
-                              width: 30.sp,
-                              child: Image(
-                                image: (index == 0)
-                                    ? AssetImage("assets/images/BSI.png")
-                                    : AssetImage("assets/images/BRI.png"),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 10.sp),
+                            height: 1.5.sp,
+                            width: 100.w,
+                            color: DataColors.Neutral200,
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: 20.sp, right: 10.sp),
+                                  height: 30.sp,
+                                  width: 30.sp,
+                                  child: Image(
+                                    image: (index == 0)
+                                        ? const AssetImage(
+                                            "assets/images/BSI.png")
+                                        : const AssetImage(
+                                            "assets/images/BRI.png"),
+                                  ),
+                                ),
                               ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data.data[index].name,
+                                    style: TextStyle(
+                                        color: DataColors.primary800,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    "a.n. ${snapshot.data.data[index].atasnama}",
+                                    style: TextStyle(
+                                        color: DataColors.primary800,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 23.w, top: 10.sp, bottom: 10.sp),
+                            height: 1.5.sp,
+                            width: 100.w,
+                            color: DataColors.Neutral200,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 23.w),
+                            child: Text(
+                              "Nomor Rekening",
+                              style: TextStyle(
+                                  color: DataColors.primary800,
+                                  fontWeight: FontWeight.w400),
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data.data[index].name,
-                                style: TextStyle(
-                                    color: DataColors.primary800,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              Text(
-                                "a.n. ${snapshot.data.data[index].atasnama}",
-                                style: TextStyle(
-                                    color: DataColors.primary800,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                            left: 23.w, top: 10.sp, bottom: 10.sp),
-                        height: 1.5.sp,
-                        width: 100.w,
-                        color: DataColors.Neutral200,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 23.w),
-                        child: Text(
-                          "Nomor Rekening",
-                          style: TextStyle(
-                              color: DataColors.primary800,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 23.w, right: 10.sp),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              snapshot.data.data[index].norek,
-                              style: TextStyle(
-                                  color: DataColors.primary,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Clipboard.setData(ClipboardData(text: " "));
-                                Get.snackbar('Hi', 'Nomor berhasil dicopy');
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "SALIN",
+                          Padding(
+                            padding: EdgeInsets.only(left: 23.w, right: 10.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  snapshot.data.data[index].norek,
                                   style: TextStyle(
                                       color: DataColors.primary,
                                       fontWeight: FontWeight.w600),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Text("Masih Memuat");
+                                InkWell(
+                                  onTap: () {
+                                    Clipboard.setData(
+                                        const ClipboardData(text: " "));
+                                    Get.snackbar('Hi', 'Nomor berhasil dicopy');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "SALIN",
+                                      style: TextStyle(
+                                          color: DataColors.primary,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const Text("Masih Memuat");
+                    }
                 }
               }),
           Container(
@@ -170,7 +178,7 @@ class BankPage extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.sp),
                             border: Border.all(color: DataColors.primary400)),
-                        child: Text("Upload Bukti Bayar"))),
+                        child: const Text("Upload Bukti Bayar"))),
               ),
             ],
           ),
@@ -310,8 +318,8 @@ class BankPage extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         color: Colors.transparent,
-        padding: EdgeInsets.symmetric(horizontal: 40),
-        margin: EdgeInsets.only(bottom: 20, top: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        margin: const EdgeInsets.only(bottom: 20, top: 10),
         child: ElevatedButton(
           onPressed: () {
             Get.offAllNamed(RoutName.root);
@@ -323,7 +331,7 @@ class BankPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(14.0),
             ),
           ),
-          child: Text(
+          child: const Text(
             'OK',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),

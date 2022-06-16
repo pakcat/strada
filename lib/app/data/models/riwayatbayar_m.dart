@@ -10,7 +10,6 @@
 //
 //     final riwayatBayar = riwayatBayarFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 RiwayatBayar riwayatBayarFromJson(String str) =>

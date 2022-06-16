@@ -11,7 +11,7 @@ class LihatBuktiPage extends StatelessWidget {
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Lihat Bukti',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -33,26 +33,28 @@ class LihatBuktiPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Container(
-        child: FutureBuilder<dynamic>(
-            future: controller.LihatBukti(data[0], data[1]),
-            builder: (context, snapshot) {
-              print(data[0]);
-              print(data[1]);
-              if (snapshot.hasData) {
-                print(snapshot.data.data[0].uploads);
-                return CachedNetworkImage(
-                  imageUrl: snapshot.data.data[0].uploads,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                );
-              } else {
-                return Center(child: Text("Tidak Ada Gambar"));
-              }
-            }),
-      ),
+      body: FutureBuilder<dynamic>(
+          future: controller.LihatBukti(data[0], data[1]),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasData) {
+                  return CachedNetworkImage(
+                    imageUrl: snapshot.data.data[0].uploads,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                                value: downloadProgress.progress),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  );
+                } else {
+                  return const Center(child: Text("Tidak Ada Gambar"));
+                }
+            }
+          }),
     );
   }
 }

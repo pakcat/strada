@@ -12,20 +12,7 @@ class TranskripPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return
-        // Obx(
-        //   () => x.loadDetailKhs.isTrue
-        //       ? Scaffold(
-        //           body: Center(
-        //             child: CircularProgressIndicator(
-        //               strokeWidth: 3,
-        //               valueColor:
-        //                   new AlwaysStoppedAnimation<Color>(DataColors.dongker),
-        //             ),
-        //           ),
-        //         )
-        //       :
-        Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
@@ -53,13 +40,14 @@ class TranskripPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 width: size.width,
                 decoration: BoxDecoration(
                   color: DataColors.blusky,
@@ -69,7 +57,7 @@ class TranskripPage extends StatelessWidget {
                       color: Colors.black.withOpacity(0.1),
                       spreadRadius: 2,
                       blurRadius: 2,
-                      offset: Offset(0, 2), // changes position of shadow
+                      offset: const Offset(0, 2), // changes position of shadow
                     )
                   ],
                 ),
@@ -111,7 +99,7 @@ class TranskripPage extends StatelessWidget {
                       width: 1,
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 6),
+                      margin: const EdgeInsets.only(left: 6),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -146,7 +134,7 @@ class TranskripPage extends StatelessWidget {
                       height: 80,
                       width: 1,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Column(
@@ -180,7 +168,7 @@ class TranskripPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               ListView.builder(
@@ -204,7 +192,7 @@ class TranskripPage extends StatelessWidget {
                           color: Colors.black26,
                           height: 20,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -215,7 +203,7 @@ class TranskripPage extends StatelessWidget {
                             color: DataColors.primary700,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         const Divider(
@@ -230,7 +218,7 @@ class TranskripPage extends StatelessWidget {
                             itemCount: x.result['data'].length,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
-                                padding: EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -241,7 +229,7 @@ class TranskripPage extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 20,
                                         ),
                                         ConstrainedBox(
@@ -258,7 +246,7 @@ class TranskripPage extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 20,
                                         ),
                                       ],
@@ -275,7 +263,7 @@ class TranskripPage extends StatelessWidget {
                                         alignment: Alignment.center,
                                         child: Text(
                                           x.result['data'][index]['nilai'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,
@@ -297,8 +285,8 @@ class TranskripPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 40),
-        margin: EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        margin: const EdgeInsets.only(bottom: 20),
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
@@ -308,12 +296,13 @@ class TranskripPage extends StatelessWidget {
             ),
             primary: Colors.white, // background
             onPrimary: DataColors.primary700, // foreground
-            shape: new RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
+              // ignore: unnecessary_new
               borderRadius: new BorderRadius.circular(14.0),
             ),
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
           ),
-          child: Text(
+          child: const Text(
             'Unduh Transkrip',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),

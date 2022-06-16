@@ -2,65 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:gostrada/app/controllers/khs/khs_c.dart';
+import 'package:gostrada/app/controllers/krs/krs_c.dart';
 import 'package:gostrada/app/routes/rout_name.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class KhsPage extends StatelessWidget {
   final c = Get.put(KHSController());
-
+  KrsController controller = Get.put(KrsController());
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Obx(
-      () => c.isLoading.isTrue
-          ? Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  valueColor:
-                      new AlwaysStoppedAnimation<Color>(DataColors.primary700),
-                ),
-              ),
-            )
-          : Scaffold(
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                leading: Builder(
-                  builder: (BuildContext context) {
-                    return IconButton(
-                      icon: const Icon(
-                          Icons.arrow_back_ios), // Put icon of your preference.
-                      onPressed: () {
-                        Get.back();
-                      },
-                    );
-                  },
-                ),
-                elevation: 0,
-                centerTitle: true,
-                titleSpacing: 0,
-                title: Text(
-                  'Data KHS',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: DataColors.primary700,
-                  ),
-                ),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-              ),
-              body: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                  Icons.arrow_back_ios), // Put icon of your preference.
+              onPressed: () {
+                Get.back();
+              },
+            );
+          },
+        ),
+        elevation: 0,
+        centerTitle: true,
+        titleSpacing: 0,
+        title: Text(
+          'Data KHS',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: DataColors.primary700,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      body: FutureBuilder<dynamic>(
+          future: null,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: SingleChildScrollView(
                   child: GetBuilder<KHSController>(
                     builder: (cont) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Text(
@@ -71,14 +65,14 @@ class KhsPage extends StatelessWidget {
                               color: DataColors.primary700,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
 
                           // box info khs terakhir
 
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             height: 143,
                             width: size.width,
                             decoration: BoxDecoration(
@@ -89,7 +83,7 @@ class KhsPage extends StatelessWidget {
                                   color: Colors.black.withOpacity(0.15),
                                   spreadRadius: 1,
                                   blurRadius: 2,
-                                  offset: Offset(
+                                  offset: const Offset(
                                       0, 3), // changes position of shadow
                                 ),
                               ],
@@ -107,7 +101,7 @@ class KhsPage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 40),
+                                  margin: const EdgeInsets.only(top: 40),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -132,7 +126,7 @@ class KhsPage extends StatelessWidget {
                                               color: DataColors.primary700,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           Text(
@@ -157,18 +151,16 @@ class KhsPage extends StatelessWidget {
                                               color: DataColors.primary700,
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
-                                          Container(
-                                            child: Text(
-                                              'INDEKS PRESTASI SEMESTER',
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: DataColors.skyBlue,
-                                                  letterSpacing: 1.0),
-                                            ),
+                                          Text(
+                                            'INDEKS PRESTASI SEMESTER',
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold,
+                                                color: DataColors.skyBlue,
+                                                letterSpacing: 1.0),
                                           )
                                         ],
                                       ),
@@ -180,7 +172,7 @@ class KhsPage extends StatelessWidget {
                           ),
                           // end box info khs Aktif
 
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
 
@@ -193,7 +185,7 @@ class KhsPage extends StatelessWidget {
                               color: DataColors.primary700,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
 
@@ -201,7 +193,7 @@ class KhsPage extends StatelessWidget {
                             primary: false,
                             shrinkWrap: true,
                             padding: const EdgeInsets.all(8),
-                            itemCount: c.dataMasterKhs.semester['data'].length,
+                            itemCount: 0,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
                                 onTap: () {
@@ -213,7 +205,8 @@ class KhsPage extends StatelessWidget {
                                 child: Container(
                                   height: 120,
                                   width: size.width,
-                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 15),
                                   decoration: BoxDecoration(
@@ -224,7 +217,7 @@ class KhsPage extends StatelessWidget {
                                         color: Colors.black.withOpacity(0.1),
                                         spreadRadius: 2,
                                         blurRadius: 2,
-                                        offset: Offset(
+                                        offset: const Offset(
                                             0, 2), // changes position of shadow
                                       )
                                     ],
@@ -292,25 +285,22 @@ class KhsPage extends StatelessWidget {
                                                   color: DataColors.primary700,
                                                 ),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
-                                              Container(
-                                                child: Text(
-                                                  'INDEKS PRESTASI SEMESTER',
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: DataColors.skyBlue,
-                                                      letterSpacing: 1.0),
-                                                ),
+                                              Text(
+                                                'INDEKS PRESTASI SEMESTER',
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: DataColors.skyBlue,
+                                                    letterSpacing: 1.0),
                                               )
                                             ],
                                           )
                                         ],
                                       ),
-                                      Align(
+                                      const Align(
                                         alignment: Alignment.bottomRight,
                                         child: Icon(
                                           Icons.arrow_forward_ios_sharp,
@@ -328,8 +318,11 @@ class KhsPage extends StatelessWidget {
                     },
                   ),
                 ),
-              ),
-            ),
+              );
+            } else {
+              return Text("Data Tidak ada");
+            }
+          }),
     );
   }
 }

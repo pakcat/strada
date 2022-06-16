@@ -1,13 +1,12 @@
-import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sizer/sizer.dart';
-import 'package:intl/intl.dart';
 import '../../../../../controllers/tagihan_c.dart';
 import '../../../../theme/color.dart';
+import 'package:intl/intl.dart';
 
 class VAPage extends StatefulWidget {
   @override
@@ -15,21 +14,17 @@ class VAPage extends StatefulWidget {
 }
 
 class _VAPageState extends State<VAPage> {
-  @override
   TagihanController controller = Get.put(TagihanController());
-
+  final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
   final box = GetStorage();
 
-  String? VA;
-
+  @override
   Widget build(BuildContext context) {
-    final now = new DateTime.now();
-    final expired = now.add(Duration(hours: 2));
     var array = Get.arguments;
     Map data = box.read("dataUser") as Map<String, dynamic>;
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Virtual Account',
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -81,21 +76,27 @@ class _VAPageState extends State<VAPage> {
                               "pembayaran online",
                               array[0].toString()),
                           builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              box.write('va', snapshot.data.virtualAccount);
-                              box.write('nominal', array[1]);
-                              VA = snapshot.data.virtualAccount;
-                              return Text(snapshot.data.virtualAccount,
-                                  style: TextStyle(
-                                      color: DataColors.primary800,
-                                      fontWeight: FontWeight.w600));
-                            } else {
-                              return (box.read('va') == null)
-                                  ? Text("Mohon Tunggu 2 Jam Lagi")
-                                  : Text(box.read('va'),
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              default:
+                                if (snapshot.hasData) {
+                                  box.write(
+                                      'nomorva', snapshot.data.virtualAccount);
+                                  box.write('nominal', array[1]);
+                                  return Text(snapshot.data.virtualAccount,
                                       style: TextStyle(
                                           color: DataColors.primary800,
                                           fontWeight: FontWeight.w600));
+                                } else {
+                                  return (box.read('nomorva') == null)
+                                      ? const Text("Mohon Tunggu 2 Jam Lagi")
+                                      : Text(box.read('nomorva'),
+                                          style: TextStyle(
+                                              color: DataColors.primary800,
+                                              fontWeight: FontWeight.w600));
+                                }
                             }
                           })
                     ],
@@ -129,8 +130,9 @@ class _VAPageState extends State<VAPage> {
                           fontWeight: FontWeight.w400)),
                   Text(
                       (box.read('nominal') == null)
-                          ? array[1].toString()
-                          : box.read('nominal'),
+                          ? formatCurrency.format(array[1])
+                          : formatCurrency
+                              .format(int.parse(box.read('nominal'))),
                       style: TextStyle(
                           color: DataColors.primary800,
                           fontWeight: FontWeight.w600))

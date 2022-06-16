@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gostrada/app/controllers/onboard/onboard_c.dart';
 import 'package:gostrada/app/routes/rout_name.dart';
-import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class OnBaoard extends StatelessWidget {
@@ -71,7 +70,7 @@ class OnBaoard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
-          const Text(
+          Text(
             "Reminder To Go",
             style: TextStyle(
               fontWeight: FontWeight.w800,
@@ -79,9 +78,7 @@ class OnBaoard extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          
           Image(image: AssetImage('assets/images/onboard/a3.png')),
-          
           Text(
             "Dengan fitur reminder, mempermudah anda dalam mengetahui tugas-tugas yang ditugaskan nantinya",
             textAlign: TextAlign.center,

@@ -7,6 +7,7 @@ import 'package:gostrada/app/ui/pages/splash/splash.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   await GetStorage.init();
@@ -19,6 +20,8 @@ void main() async {
   ]);
   GlobalBinding().dependencies();
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID', null);
 
   // Plugin must be initialized before using
   await FlutterDownloader.initialize(

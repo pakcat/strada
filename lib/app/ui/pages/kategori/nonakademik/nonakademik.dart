@@ -5,14 +5,12 @@ import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../routes/rout_name.dart';
-
 class NonAkademikPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kategori'),
+        title: const Text('Kategori'),
         backgroundColor: Colors.white,
         foregroundColor: DataColors.primary700,
         leading: Builder(
@@ -42,13 +40,13 @@ class NonAkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/englishroom.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -59,7 +57,7 @@ class NonAkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -74,13 +72,13 @@ class NonAkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/publicspeaking.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -91,7 +89,7 @@ class NonAkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -106,13 +104,13 @@ class NonAkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/softskill.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -123,7 +121,7 @@ class NonAkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -138,13 +136,13 @@ class NonAkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/konsultasidospem.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -155,7 +153,7 @@ class NonAkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -170,14 +168,14 @@ class NonAkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                             'assets/images/dashboard/icon/kuliahonline.svg',
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -188,7 +186,7 @@ class NonAkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],

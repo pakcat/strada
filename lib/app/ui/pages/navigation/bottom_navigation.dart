@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gostrada/app/controllers/navigation/botnav_c.dart';
+import 'package:gostrada/app/ui/pages/navigation/chat.dart';
 import 'package:gostrada/app/ui/pages/navigation/dashboard.dart';
-import 'package:gostrada/app/ui/pages/navigation/informasi.dart';
-import 'package:gostrada/app/ui/pages/navigation/perkuliahan.dart';
+import 'package:gostrada/app/ui/pages/navigation/monitoring.dart';
+import 'package:gostrada/app/ui/pages/navigation/percakapan.dart';
 import 'package:gostrada/app/ui/pages/navigation/profile.dart';
 
 import 'package:gostrada/app/ui/theme/color.dart';
@@ -12,8 +13,8 @@ import 'package:hexcolor/hexcolor.dart';
 class BottomNavigationPage extends StatelessWidget {
   final List<Widget> pagesList = [
     DashboardPage(),
-    InformasiPage(),
-    PerkuliahanPage(),
+    MonitoringPage(),
+    ChatPage(),
     ProfilePage(),
   ];
 
@@ -30,10 +31,10 @@ class BottomNavigationPage extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(
         () => Container(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
               color: HexColor('#3C5595'),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               )),
@@ -57,28 +58,28 @@ class BottomNavigationPage extends StatelessWidget {
   //list Bottom Navigation
   List<BottomNavigationBarItem> get NavList {
     return [
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: Icon(
           Icons.home_rounded,
           size: 32,
         ),
         label: 'Beranda',
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: ImageIcon(
           AssetImage("assets/icon/botnav/monitoring.png"),
           size: 32,
         ),
         label: 'Monitoring',
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: ImageIcon(
           AssetImage("assets/icon/botnav/chat.png"),
           size: 32,
         ),
         label: 'Chat',
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: ImageIcon(
           AssetImage("assets/icon/botnav/person.png"),
           size: 32,

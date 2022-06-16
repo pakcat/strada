@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 BankModel bankModelFromJson(String str) => BankModel.fromJson(json.decode(str));

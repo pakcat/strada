@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class OnboardController extends GetxController{
-    var isViewed = false;
+class OnboardController extends GetxController {
+  var isViewed = false;
 
-    @override
+  @override
   void onInit() {
     final box = GetStorage();
     box.write('isViewed', true);
-    print('onboard is viewed');
     super.onInit();
   }
 }

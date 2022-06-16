@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:gostrada/app/data/models/TPmodel.dart';
 import 'package:gostrada/app/data/models/nominal.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../data/models/test_m.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +13,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class UploadBuktiController extends GetxController {
-  @override
   List<String> periode = [];
   List<String> idperiode = [];
   var txt = TextEditingController();
@@ -116,7 +114,7 @@ class UploadBuktiController extends GetxController {
       } else {
         var result = NominalModel.fromJson(databody);
         txt.text = result.labelTotal;
-        print(result);
+
         return result;
       }
     }
@@ -124,7 +122,6 @@ class UploadBuktiController extends GetxController {
 
   postbukti(image, String nim, String idperiode, String CodeTransaksi,
       String nominal_id) async {
-    print(nominal_id);
     File file = File(image.path);
     var request = http.MultipartRequest(
         'POST',
@@ -147,12 +144,9 @@ class UploadBuktiController extends GetxController {
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
       Get.snackbar('Upload Bukti Berhasil',
           'Silahkan Dicek pada menu Upload Bukti Bayar');
-    } else {
-      print(response.reasonPhrase);
-    }
+    } else {}
   }
 
   LihatBukti(String nim, String code) async {
@@ -175,11 +169,10 @@ class UploadBuktiController extends GetxController {
       //result2['data'].map((data) => DataModel.fromJson(data)).toList();
       // print(result2);
       if (databody['error'] == true) {
-        print("error");
         return null;
       } else {
         var result = LihatBuktiModel.fromJson(databody);
-        print(response.body);
+
         return result;
       }
     }

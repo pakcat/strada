@@ -10,7 +10,7 @@ class PerkuliahanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Chat',
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -48,12 +48,12 @@ class PerkuliahanPage extends StatelessWidget {
             ),
             ListView.builder(
               shrinkWrap: true,
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               itemCount: 3,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
-                    Get.to(ChatPage());
+                    // Get.to(ChatPage());
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -61,8 +61,8 @@ class PerkuliahanPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CircleAvatar(),
-                          Spacer(
+                          const CircleAvatar(),
+                          const Spacer(
                             flex: 1,
                           ),
                           Column(
@@ -85,7 +85,7 @@ class PerkuliahanPage extends StatelessWidget {
                               )
                             ],
                           ),
-                          Spacer(
+                          const Spacer(
                             flex: 1,
                           ),
                           Column(

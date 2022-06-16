@@ -40,3 +40,13 @@ class InputPenawaran {
   static String semester = 'semester';
   static String accept = 'accept';
 }
+
+class QrCode {
+  static String nim = 'nim';
+  static String code = 'code';
+}
+
+class chatclass {
+  static String nim = 'nim';
+  static String pesan = 'pesan';
+}

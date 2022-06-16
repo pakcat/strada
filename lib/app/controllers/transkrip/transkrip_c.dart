@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:gostrada/app/data/models/detailKhs_m.dart';
 
 class TranskripController extends GetxController {
   List<dynamic> transkripNilai = [
@@ -21,9 +19,7 @@ class TranskripController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     result = jsonDecode(transkripNilai[0]['data']);
-    print(result['data'].length);
   }
 }

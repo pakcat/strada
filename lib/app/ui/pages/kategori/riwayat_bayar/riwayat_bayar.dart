@@ -16,7 +16,7 @@ class RiwayatBayarPage extends StatelessWidget {
     Map data = box.read("dataUser") as Map<String, dynamic>;
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Riwayat Bayar',
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -43,32 +43,37 @@ class RiwayatBayarPage extends StatelessWidget {
           child: FutureBuilder<dynamic>(
               future: controller.RB(data['nim']),
               builder: (context, snapshot) {
-                // print(snapshot.data);\
-                if (snapshot.hasData) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        itemCount: snapshot.data.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return riwayat(
-                            status: snapshot.data.data[index].jenisPembayaran,
-                            kode: snapshot.data.data[index].codeTrans,
-                            nominal: snapshot.data.data[index].nominal,
-                            dibuat: snapshot.data.data[index].dibuat,
-                            fakultas: snapshot.data.data[index].fakultas,
-                            jenjang: snapshot.data.data[index].jenjang,
-                            prodi: snapshot.data.data[index].prodi,
-                            index: index,
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                } else {
-                  return Center(child: Text("Tidak Ada Data"));
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const Center(child: CircularProgressIndicator());
+                  default:
+                    if (snapshot.hasData) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: snapshot.data.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return riwayat(
+                                status:
+                                    snapshot.data.data[index].jenisPembayaran,
+                                kode: snapshot.data.data[index].codeTrans,
+                                nominal: snapshot.data.data[index].nominal,
+                                dibuat: snapshot.data.data[index].dibuat,
+                                fakultas: snapshot.data.data[index].fakultas,
+                                jenjang: snapshot.data.data[index].jenjang,
+                                prodi: snapshot.data.data[index].prodi,
+                                index: index,
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const Center(child: Text("Tidak Ada Data"));
+                    }
                 }
               }),
         ));
@@ -101,7 +106,7 @@ class riwayat extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: HexColor("#F3F3F3"), width: 2)),
@@ -145,7 +150,7 @@ class riwayat extends StatelessWidget {
                     ),
                     (status == "OFFLINE")
                         ? Container(
-                            padding: EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 color: DataColors.Neutral200),
@@ -158,7 +163,7 @@ class riwayat extends StatelessWidget {
                             ),
                           )
                         : Container(
-                            padding: EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6),
                                 color: DataColors.primary700),
@@ -175,11 +180,11 @@ class riwayat extends StatelessWidget {
               ],
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 6),
+              margin: const EdgeInsets.symmetric(vertical: 6),
               height: 1,
               color: HexColor("#E8E8E8"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             (status == "ONLINE")
@@ -188,7 +193,7 @@ class riwayat extends StatelessWidget {
                         color: DataColors.backgroundbutton,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500))
-                : Text(""),
+                : const Text(""),
             Text(
               "$jenjang - $prodi",
               style: TextStyle(
@@ -196,7 +201,7 @@ class riwayat extends StatelessWidget {
                   fontSize: 17.sp,
                   fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -206,11 +211,11 @@ class riwayat extends StatelessWidget {
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   color: DataColors.primary),
@@ -222,7 +227,7 @@ class riwayat extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -235,11 +240,11 @@ class riwayat extends StatelessWidget {
                             color: DataColors.primary800,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500)),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Container(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
                           color: DataColors.blusky),
@@ -257,7 +262,7 @@ class riwayat extends StatelessWidget {
                     onPressed: () {
                       Get.toNamed(RoutName.detailtransaksi, arguments: index);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_forward_ios,
                     ))
               ],

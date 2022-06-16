@@ -2,7 +2,6 @@
 //
 //     final tagihanModel = tagihanModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 TagihanModel tagihanModelFromJson(String str) =>
@@ -19,7 +18,7 @@ class TagihanModel {
     required this.error,
   });
 
-  final String namaTagihan;
+  final String? namaTagihan;
   final int status;
   final TagihanCicilan? tagihanCicilan;
   final TagihanSemester? tagihanSemester;
@@ -283,7 +282,7 @@ class Datumm {
   final int nominal;
   final int bayar;
   final int idBiaya;
-  final String idCredit;
+  final int idCredit;
   final int semester;
   final int type;
 

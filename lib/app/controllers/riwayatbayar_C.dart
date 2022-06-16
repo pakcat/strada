@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:gostrada/app/ui/pages/kategori/riwayat_bayar/detailtransaksi/pdfview.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'package:dio/dio.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+
 import 'package:get/get.dart';
 import 'package:gostrada/app/data/models/test_m.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +20,7 @@ class RiwayatBayarController extends GetxController {
     Directory? directory;
     try {
       directory = Directory('/storage/emulated/0/Download');
-    } catch (err, stack) {
+    } catch (err) {
       print("Cannot get download folder path");
     }
     return directory?.path;
@@ -30,7 +30,6 @@ class RiwayatBayarController extends GetxController {
     final Map<String, dynamic> dataBody = {
       RBModel.nim: nim,
     };
-    print("ini test");
     var response = await http.post(
         Uri.parse(
             "https://sia.iik-strada.ac.id/mobile/keuangan/riwayat_pembayaran"),
@@ -52,8 +51,7 @@ class RiwayatBayarController extends GetxController {
       } else {
         data.clear();
         var result = RiwayatBayar.fromJson(databody);
-        print("ini");
-        print(response.body);
+
         data.add(result);
 
         return result;
@@ -127,8 +125,7 @@ class RiwayatBayarController extends GetxController {
 
       } else {
         var result = UnduhBuktiModel.fromJson(databody);
-        print(place);
-        print(result.file);
+
         // final taskId = await FlutterDownloader.enqueue(
         //   url: result.file,
         //   savedDir: '/storage/emulated/0/Download/',
@@ -156,9 +153,7 @@ class RiwayatBayarController extends GetxController {
           // Here, you're catching an error and printing it. For production
           // apps, you should display the warning to the user and give them a
           // way to restart the download.
-        } catch (e) {
-          print(e);
-        }
+        } catch (e) {}
       }
     }
   }

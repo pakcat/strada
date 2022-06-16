@@ -19,6 +19,5 @@ abstract class DataColors {
   static final Color primary200 = HexColor('#C3D8F6');
   static final Color Neutral400 = HexColor('#757575');
   static final Color Neutral100 = HexColor('#F3F3F3');
+  static final Color Neutral600 = HexColor('#161313');
 }
-
-Color Hello = HexColor('#E8E8E8');

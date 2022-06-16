@@ -1,5 +1,6 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:gostrada/app/controllers/auth/auth_c.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,8 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image(image: AssetImage('assets/images/logo/iikstrada.png')),
+                const Image(
+                    image: AssetImage('assets/images/logo/iikstrada.png')),
 
                 SizedBox(
                   height: 40.sp,
@@ -111,7 +113,7 @@ class LoginPage extends StatelessWidget {
                 // error message
                 Visibility(
                   visible: c.errorMsg.value,
-                  child: Align(
+                  child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "*Username atau password salah ",
@@ -129,7 +131,7 @@ class LoginPage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                     ),
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       "Lupa Kata Sandi?",
                       style: TextStyle(color: Colors.black),
                     ),
@@ -142,7 +144,7 @@ class LoginPage extends StatelessWidget {
                 ),
 
                 // button login
-                Container(
+                SizedBox(
                   width: size.width,
                   child: ElevatedButton(
                     onPressed: () => c.login(c.nimC.text, c.passC.text),
@@ -155,16 +157,16 @@ class LoginPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: c.isLoading.isTrue
-                          ? SizedBox(
+                          ? const SizedBox(
                               height: 15,
                               width: 15,
                               child: CircularProgressIndicator(
                                 strokeWidth: 3,
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Colors.white),
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
                             )
-                          : Text(
+                          : const Text(
                               'Masuk',
                               style: TextStyle(
                                 fontSize: 16,

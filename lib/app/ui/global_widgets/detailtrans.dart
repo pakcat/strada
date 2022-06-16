@@ -7,7 +7,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
   return Column(
     children: [
       Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: DottedLine(
           direction: Axis.horizontal,
           lineLength: double.infinity,
@@ -21,7 +21,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: [
             Row(
@@ -31,14 +31,14 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                     flex: 3,
                     child:
                         Text("Nomor Objek Pajak (NOP)", style: tagihantitle())),
-                Spacer(
+                const Spacer(
                   flex: 1,
                 ),
                 Text(nop, style: tagihandesc()),
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -46,7 +46,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                     flex: 3,
                     child: Text("Nama Wajib Pajak", style: tagihantitle()),
                   ),
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   Text(nama, style: tagihandesc()),
@@ -59,21 +59,21 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                 Expanded(
                     flex: 3,
                     child: Text("Letak Objek Pajak", style: tagihantitle())),
-                Spacer(
+                const Spacer(
                   flex: 1,
                 ),
                 Text("ASHOKA REGENCY BLOK D6", style: tagihandesc()),
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                       flex: 3,
                       child: Text("Objek Pajak", style: tagihantitle())),
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   Text("Bumi Bangunan", style: tagihandesc()),
@@ -90,14 +90,14 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                             color: HexColor("#000137"),
                             fontSize: 10,
                             fontWeight: FontWeight.w700))),
-                Spacer(
+                const Spacer(
                   flex: 1,
                 ),
                 Text(mstnjop, style: tagihandesc()),
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -105,7 +105,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                       flex: 3,
                       child: Text("NJOPTKP (NJOP Tidak Kena Pajak)",
                           style: tagihantitle())),
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   Text(msttotalnjop, style: tagihandesc()),
@@ -119,14 +119,14 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                     flex: 3,
                     child: Text("NJOP Untuk Perhitungan PBB",
                         style: tagihantitle())),
-                Spacer(
+                const Spacer(
                   flex: 1,
                 ),
                 Text(mstpersenpajak, style: tagihandesc()),
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -135,7 +135,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                       child: Text(
                           "PBB Yang Terhutang (0,1% x Rp.74.242.000,00)",
                           style: tagihantitle())),
-                  Spacer(
+                  const Spacer(
                     flex: 1,
                   ),
                   Text(mstgrandtotal, style: tagihandesc()),
@@ -146,7 +146,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: DottedLine(
           direction: Axis.horizontal,
           lineLength: double.infinity,
@@ -160,7 +160,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -171,7 +171,7 @@ Column ColumnPembayaran(String nop, String nama, String mstnjop,
                         color: HexColor("#000137"),
                         fontSize: 10,
                         fontWeight: FontWeight.w700))),
-            Spacer(
+            const Spacer(
               flex: 1,
             ),
             Text(mstgrandtotal,

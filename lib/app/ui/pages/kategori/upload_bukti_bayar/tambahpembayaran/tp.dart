@@ -19,8 +19,6 @@ class TambahPembayaranPage extends StatefulWidget {
 }
 
 class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
-  final ImagePicker _picker = ImagePicker();
-
   dispose() {
     controller.txt.clear();
     super.dispose();
@@ -40,7 +38,7 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
     Map data = box.read("dataUser") as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Form Data',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -66,176 +64,180 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
         child: FutureBuilder<dynamic>(
             future: controller.GetTP(data['nim']),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Periode"),
-                      SizedBox(
-                        height: 5.sp,
-                      ),
-                      Center(
-                        child: CustomDropdownButton2(
-                          buttonDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.sp),
-                              color: HexColor("#F3F3F3")),
-                          buttonWidth: 90.w,
-                          dropdownWidth: 90.w,
-                          hint: '',
-                          dropdownItems: controller.periode,
-                          value: selectedValue1,
-                          onChanged: (value) {
-                            setState(() {
-                              index = controller.periode.indexOf(value!);
-
-                              selectedValue1 = value as String;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      Text("Kode Transaksi"),
-                      Center(
-                        child: CustomDropdownButton2(
-                          buttonDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.sp),
-                              color: HexColor("#F3F3F3")),
-                          buttonWidth: 90.w,
-                          dropdownWidth: 90.w,
-                          hint: '',
-                          dropdownItems: controller.kode,
-                          value: selec,
-                          onChanged: (value) {
-                            setState(() {
-                              selectedValue2 = value as String;
-                              selec = value as String;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      Text("Nominal"),
-                      SizedBox(
-                        height: 5.sp,
-                      ),
-                      FutureBuilder<dynamic>(
-                          future: controller.getnominal(selectedValue2),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              jumlah = snapshot.data.total;
-                              return TextField(
-                                controller: controller.txt,
-                                decoration: InputDecoration(
-                                  enabled: false,
-                                  filled: true,
-                                  fillColor: HexColor("#F3F3F3"),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.sp),
-                                    borderSide: const BorderSide(
-                                        color: Colors.transparent, width: 2.0),
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return TextField(
-                                controller: controller.txt,
-                                decoration: InputDecoration(
-                                  enabled: false,
-                                  filled: true,
-                                  fillColor: HexColor("#F3F3F3"),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.sp),
-                                    borderSide: const BorderSide(
-                                        color: Colors.transparent, width: 2.0),
-                                  ),
-                                ),
-                              );
-                            }
-                          }),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      Text("Catatan"),
-                      SizedBox(
-                        height: 5.sp,
-                      ),
-                      TextField(
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: HexColor("#F3F3F3"),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.sp),
-                            borderSide: const BorderSide(
-                                color: Colors.transparent, width: 2.0),
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator());
+                default:
+                  if (snapshot.hasData) {
+                    return SingleChildScrollView(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Periode"),
+                          SizedBox(
+                            height: 5.sp,
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      Text("Bukti Bayar"),
-                      SizedBox(
-                        height: 5.sp,
-                      ),
-                      Center(
-                        child: InkWell(
-                          onTap: () {
-                            pickImage();
-                          },
-                          child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10.sp, horizontal: 10.sp),
-                              width: 90.w,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.sp),
-                                  color: Colors.white,
-                                  border:
-                                      Border.all(color: DataColors.primary)),
-                              child: Center(
-                                  child: Text(
-                                "Pilih File",
-                                style: TextStyle(
-                                    color: DataColors.primary,
-                                    fontWeight: FontWeight.w700),
-                              ))),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.sp,
-                      ),
-                      (image != null)
-                          ? Center(
+                          Center(
+                            child: CustomDropdownButton2(
+                              buttonDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.sp),
+                                  color: HexColor("#F3F3F3")),
+                              buttonWidth: 90.w,
+                              dropdownWidth: 90.w,
+                              hint: '',
+                              dropdownItems: controller.periode,
+                              value: selectedValue1,
+                              onChanged: (value) {
+                                setState(() {
+                                  index = controller.periode.indexOf(value!);
+
+                                  selectedValue1 = value;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          const Text("Kode Transaksi"),
+                          Center(
+                            child: CustomDropdownButton2(
+                              buttonDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.sp),
+                                  color: HexColor("#F3F3F3")),
+                              buttonWidth: 90.w,
+                              dropdownWidth: 90.w,
+                              hint: '',
+                              dropdownItems: controller.kode,
+                              value: selec,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedValue2 = value as String;
+                                  selec = value;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          const Text("Nominal"),
+                          SizedBox(
+                            height: 5.sp,
+                          ),
+                          FutureBuilder<dynamic>(
+                              future: controller.getnominal(selectedValue2),
+                              builder: (context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  default:
+                                    if (snapshot.hasData) {
+                                      jumlah = snapshot.data.total;
+                                      return TextField(
+                                        controller: controller.txt,
+                                        decoration: InputDecoration(
+                                          enabled: false,
+                                          filled: true,
+                                          fillColor: HexColor("#F3F3F3"),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.sp),
+                                            borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return TextField(
+                                        controller: controller.txt,
+                                        decoration: InputDecoration(
+                                          enabled: false,
+                                          filled: true,
+                                          fillColor: HexColor("#F3F3F3"),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.sp),
+                                            borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                }
+                              }),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          const Text("Catatan"),
+                          SizedBox(
+                            height: 5.sp,
+                          ),
+                          TextField(
+                            maxLines: 3,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: HexColor("#F3F3F3"),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.sp),
+                                borderSide: const BorderSide(
+                                    color: Colors.transparent, width: 2.0),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                          const Text("Bukti Bayar"),
+                          SizedBox(
+                            height: 5.sp,
+                          ),
+                          Center(
+                            child: InkWell(
+                              onTap: () {
+                                pickImage();
+                              },
                               child: Container(
-                                  height: 100.sp,
-                                  width: 100.sp,
-                                  child: Image.file(image!)),
-                            )
-                          : Text("Select Image")
-                    ],
-                  ),
-                );
-              } else {
-                return Center(child: Text("Tidak Ada Data"));
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10.sp, horizontal: 10.sp),
+                                  width: 90.w,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.sp),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: DataColors.primary)),
+                                  child: Center(
+                                      child: Text(
+                                    "Pilih File",
+                                    style: TextStyle(
+                                        color: DataColors.primary,
+                                        fontWeight: FontWeight.w700),
+                                  ))),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.sp,
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const Center(child: Text("Tidak Ada Data"));
+                  }
               }
             }),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 40),
-        margin: EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        margin: const EdgeInsets.only(bottom: 20),
         child: ElevatedButton(
           onPressed: () {
-            if (image != null &&
-                controller.idperiode[index] != null &&
-                selectedValue2 != null &&
-                jumlah != null) {
-              print(controller.txt);
+            if (image != null && jumlah != null) {
               controller.postbukti(
                   image,
                   data['nim'],
@@ -253,9 +255,9 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14.0),
             ),
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
           ),
-          child: Text(
+          child: const Text(
             'Simpan Data',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -271,8 +273,6 @@ class _TambahPembayaranPageState extends State<TambahPembayaranPage> {
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
+    } on PlatformException catch (e) {}
   }
 }

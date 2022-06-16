@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../../../theme/color.dart';
 
 class MyPage extends StatefulWidget {
+  const MyPage({Key? key}) : super(key: key);
+
   @override
   State<MyPage> createState() => _MyPageState();
 }
@@ -12,14 +14,10 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
-    int? pages = 0;
-    int currentPage = 0;
-    bool isReady = false;
-    String errorMessage = '';
     var path = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Bukti Pembayaran',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -48,10 +46,7 @@ class _MyPageState extends State<MyPage> {
         autoSpacing: false,
         pageFling: false,
         onRender: (_pages) {
-          setState(() {
-            pages = _pages;
-            isReady = true;
-          });
+          setState(() {});
         },
       ),
     );

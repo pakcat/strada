@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:gostrada/app/controllers/auth/auth_c.dart';
 import 'package:gostrada/app/controllers/profile/profile_c.dart';
+import 'package:gostrada/app/ui/pages/edit_profile/edit_profile.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -42,21 +42,21 @@ class ProfilePage extends StatelessWidget {
                 centerTitle: true,
               ),
               body: Container(
-                padding: EdgeInsets.symmetric(horizontal: 50),
+                padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Stack(
                         children: [
                           Container(
-                            padding:
-                                EdgeInsets.only(left: 25, top: 80, bottom: 20),
-                            margin: EdgeInsets.only(top: 50),
+                            padding: const EdgeInsets.only(
+                                left: 25, top: 80, bottom: 20),
+                            margin: const EdgeInsets.only(top: 50),
                             width: size.width,
                             decoration: BoxDecoration(
                                 color: DataColors.semigrey,
@@ -75,7 +75,7 @@ class ProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Text(
-                                    "nama",
+                                    x.datalist[0].data![0].nama,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -83,7 +83,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
                                   child: Text(
-                                    "nim",
+                                    x.datalist[0].data![0].nim,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
@@ -105,7 +105,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
@@ -123,7 +123,7 @@ class ProfilePage extends StatelessWidget {
                                       maxWidth: size.width / 1.5,
                                     ),
                                     child: AutoSizeText(
-                                      "x.user['prodi']",
+                                      x.datalist[0].data![0].prodi,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
@@ -132,7 +132,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
@@ -150,9 +150,7 @@ class ProfilePage extends StatelessWidget {
                                       maxWidth: size.width / 1.5,
                                     ),
                                     child: AutoSizeText(
-                                      x.user['fakultas'] != null
-                                          ? x.user['fakultas']
-                                          : '-',
+                                      x.datalist[0].data![0].fakultas,
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w700,
@@ -161,7 +159,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                               ],
@@ -178,21 +176,21 @@ class ProfilePage extends StatelessWidget {
                                     color: Colors.black.withOpacity(0.1),
                                     spreadRadius: 2,
                                     blurRadius: 2,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 2), // changes position of shadow
                                   )
                                 ],
                                 borderRadius: BorderRadius.circular(50),
                                 image: DecorationImage(
                                     image: NetworkImage(
-                                        x.urlPhoto + x.data['photo']),
+                                        x.datalist[0].data![0].photo),
                                     fit: BoxFit.cover),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       ListView(
@@ -204,7 +202,17 @@ class ProfilePage extends StatelessWidget {
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(EditProfilePage(), arguments: [
+                                x.datalist[0].data![0].nama,
+                                x.datalist[0].data![0].fakultas,
+                                x.datalist[0].data![0].prodi,
+                                x.datalist[0].data![0].gender,
+                                x.datalist[0].data![0].nim,
+                                x.datalist[0].data![0].photo,
+                                x.datalist[0].data![0].id,
+                              ]);
+                            },
                             child: Row(
                               children: [
                                 Expanded(
@@ -218,11 +226,11 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                       color: DataColors.semigrey,
                                       borderRadius: BorderRadius.circular(30)),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_forward_ios,
                                     size: 12,
                                   ),
@@ -253,11 +261,11 @@ class ProfilePage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                       color: DataColors.semigrey,
                                       borderRadius: BorderRadius.circular(30)),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_forward_ios,
                                     size: 12,
                                   ),
@@ -277,10 +285,15 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               bottomNavigationBar: Container(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                margin: EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                margin: const EdgeInsets.only(bottom: 20),
                 child: ElevatedButton(
-                  onPressed: () => c.logout(),
+                  onPressed: () {
+                    Get.defaultDialog(
+                        onConfirm: () => c.logout(),
+                        onCancel: () => Navigator.pop(context),
+                        middleText: "Apakah anda yakin ingin keluar");
+                  },
                   style: ElevatedButton.styleFrom(
                     side: BorderSide(
                       width: 2.0,
@@ -291,9 +304,9 @@ class ProfilePage extends StatelessWidget {
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(14.0),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Keluar',
                     style: TextStyle(fontWeight: FontWeight.w700),
                   ),

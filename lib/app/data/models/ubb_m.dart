@@ -2,7 +2,6 @@
 //
 //     final ubb = ubbFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 Ubb ubbFromJson(String str) => Ubb.fromJson(json.decode(str));

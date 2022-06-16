@@ -1,10 +1,8 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gostrada/app/controllers/tagihan_c.dart';
 import 'package:gostrada/app/ui/pages/kategori/tagihan/va/bankpage.dart';
 import 'package:gostrada/app/ui/pages/kategori/tagihan/va/va.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -22,11 +20,10 @@ class _PreviewPembayaranPageState extends State<PreviewPembayaranPage> {
     var array = Get.arguments;
     bool isvisible = false;
 
-    TagihanController controller = Get.put(TagihanController());
     DetailTransaksiController c = Get.put(DetailTransaksiController());
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Preview',
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -62,7 +59,7 @@ class _PreviewPembayaranPageState extends State<PreviewPembayaranPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ImageIcon(
-                    AssetImage("assets/images/money.png"),
+                    const AssetImage("assets/images/money.png"),
                     color: DataColors.primary400,
                     size: 30.sp,
                   ),
@@ -132,7 +129,7 @@ class _PreviewPembayaranPageState extends State<PreviewPembayaranPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ImageIcon(
-                            AssetImage("assets/images/va.png"),
+                            const AssetImage("assets/images/va.png"),
                             color: DataColors.primary400,
                             size: 30.sp,
                           ),
@@ -176,7 +173,7 @@ class _PreviewPembayaranPageState extends State<PreviewPembayaranPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ImageIcon(
-                            AssetImage("assets/images/tf.png"),
+                            const AssetImage("assets/images/tf.png"),
                             color: DataColors.primary400,
                             size: 30.sp,
                           ),
@@ -232,7 +229,7 @@ class _PreviewPembayaranPageState extends State<PreviewPembayaranPage> {
                                           left: 20.sp, right: 10.sp),
                                       height: 30.sp,
                                       width: 30.sp,
-                                      child: Image(
+                                      child: const Image(
                                         image:
                                             AssetImage("assets/images/BSI.png"),
                                       ),
@@ -273,7 +270,7 @@ class _PreviewPembayaranPageState extends State<PreviewPembayaranPage> {
                                           left: 20.sp, right: 10.sp),
                                       height: 30.sp,
                                       width: 30.sp,
-                                      child: Image(
+                                      child: const Image(
                                         image:
                                             AssetImage("assets/images/BRI.png"),
                                       ),

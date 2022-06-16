@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:gostrada/app/ui/pages/kategori/khs/detailKhs.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../routes/rout_name.dart';
+import '../../scanner/scanner.dart';
 
 class AkademikPage extends StatelessWidget {
+  const AkademikPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kategori'),
+        title: const Text('Kategori'),
         backgroundColor: Colors.white,
         foregroundColor: DataColors.primary700,
         leading: Builder(
@@ -42,13 +46,13 @@ class AkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/penawarankrs.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -59,7 +63,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -74,13 +78,13 @@ class AkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/datakrs.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -91,7 +95,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -102,17 +106,17 @@ class AkademikPage extends StatelessWidget {
                 xs: 3,
                 md: 2,
                 child: InkWell(
-                  onTap: () => Get.toNamed(RoutName.khs),
+                  onTap: () => Get.to(DetailKhsPage()),
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/datakhs.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -123,7 +127,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -138,13 +142,13 @@ class AkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                               'assets/images/dashboard/icon/transkrip.svg')),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -155,7 +159,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -166,51 +170,20 @@ class AkademikPage extends StatelessWidget {
                 xs: 3,
                 md: 2,
                 child: InkWell(
-                  //onTap: () => Get.toNamed(RoutName.transkrip),
+                  onTap: () {
+                    Get.to(const QRViewExample());
+                  },
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: DataColors.blusky,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: SvgPicture.asset(
-                            'assets/images/dashboard/icon/jadwalkuliah.svg',
-                          )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Jadwal Kuliah',
-                        style: TextStyle(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w700,
-                            color: DataColors.primary700),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ResponsiveGridCol(
-                xs: 3,
-                md: 2,
-                child: InkWell(
-                  //onTap: () => Get.toNamed(RoutName.transkrip),
-                  child: Column(
-                    children: [
-                      Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                             'assets/images/dashboard/icon/absensi.svg',
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -221,7 +194,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -236,14 +209,14 @@ class AkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                             'assets/images/dashboard/icon/daftaryudisium.svg',
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -254,7 +227,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],
@@ -269,14 +242,14 @@ class AkademikPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: DataColors.blusky,
                               borderRadius: BorderRadius.circular(30)),
                           child: SvgPicture.asset(
                             'assets/images/dashboard/icon/requestsurat.svg',
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -287,7 +260,7 @@ class AkademikPage extends StatelessWidget {
                             color: DataColors.primary700),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                     ],

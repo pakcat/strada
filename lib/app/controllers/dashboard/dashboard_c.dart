@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:gostrada/app/data/models/getipk.dart';
+import 'package:gostrada/app/ui/pages/navigation/dashboard.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:http/http.dart' as http;
+import '../../data/models/test_m.dart';
 
 class DashboardController extends GetxController {
   final String urlPhoto = 'https://sia.iik-strada.ac.id/uploads/mhs/';
   TooltipBehavior? tooltipBehavior;
 
   // final List<ChartData> chartData = <ChartData>[
-  //           ChartData(2010, 10.53),
+  //           ChartData("2010", "10.53"),
   //           ChartData(2011, 9.5),
   //           ChartData(2012, 10),
   //           ChartData(2013, 9.4),
@@ -17,8 +22,6 @@ class DashboardController extends GetxController {
   //           ChartData(2017, 3.6),
   //           ChartData(2018, 3.43),
   //       ];
-
-  // final List chartData = List.generate(length, (index) => null);
 
   List<String> urlImage = [
     'assets/images/dashboard/slider/slide1.png',
@@ -38,10 +41,44 @@ class DashboardController extends GetxController {
     tooltipBehavior = TooltipBehavior(enable: true);
     super.onInit();
   }
-}
 
-class ChartData {
-  ChartData(this.year, this.sales);
-  final String year;
-  final double sales;
+  getipk(String nim) async {
+    final Map<String, dynamic> dataBody = {
+      RBModel.nim: nim,
+    };
+
+    var response = await http.post(
+        Uri.parse("https://sia.iik-strada.ac.id/mobile/dashboard/show_ipk"),
+        body: dataBody);
+
+    if (response.statusCode == 200) {
+      var databody = jsonDecode(response.body);
+      // print(DataUser['data']);
+
+      //var test = jsonDecode(DataUser['data']);
+      //print(test);
+
+      // List list =
+      //result2['data'].map((data) => DataModel.fromJson(data)).toList();
+      // print(result2);
+      if (databody['error'] == true) {
+        //show error
+        return null;
+      } else {
+        var result = GetIpkModel.fromJson(databody);
+
+        // for (var item = 0; item < result.data!.length; item++) {
+
+        //   //listipk.add([result.data![item].semester, result.data![item].ipk]);
+        // }
+
+        final List<ChartData> chartData = List.generate(
+            result.data!.length,
+            (index) => ChartData("Semester " + result.data![index].semester,
+                result.data![index].ipk));
+
+        return chartData;
+      }
+    }
+  }
 }

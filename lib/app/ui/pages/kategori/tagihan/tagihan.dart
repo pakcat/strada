@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gostrada/app/controllers/tagihan_c.dart';
-import 'package:gostrada/app/data/models/tagihan_m.dart';
 import 'package:gostrada/app/ui/pages/kategori/tagihan/semuatagihan.dart';
 import 'package:gostrada/app/ui/pages/kategori/tagihan/va/preview_pembayaran.dart';
 import 'package:gostrada/app/ui/theme/color.dart';
@@ -22,7 +18,7 @@ class TagihanPage extends StatelessWidget {
     Map data = box.read("dataUser") as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Tagihan',
           style: TextStyle(
             fontWeight: FontWeight.w600,
@@ -47,229 +43,251 @@ class TagihanPage extends StatelessWidget {
       body: FutureBuilder<dynamic>(
           future: controller.Tagihan(data['nim']),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 5.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 12.sp, vertical: 14.sp),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: DataColors.blusky),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: SvgPicture.asset(
-                              'assets/images/dashboard/icon/tagihan.svg',
-                              color: DataColors.primary.withOpacity(0.20),
-                              height: 70.sp,
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasData) {
+                  return SingleChildScrollView(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 7.w, vertical: 5.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.sp, vertical: 14.sp),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: DataColors.blusky),
+                          child: Stack(
                             children: [
-                              Text(
-                                "Nama Tagihan:",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: DataColors.primary700,
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: SvgPicture.asset(
+                                  'assets/images/dashboard/icon/tagihan.svg',
+                                  color: DataColors.primary.withOpacity(0.20),
+                                  height: 70.sp,
                                 ),
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                snapshot.data.namaTagihan,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: DataColors.primary,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Nama Tagihan:",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: DataColors.primary700,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    (snapshot.data.namaTagihan == null)
+                                        ? " Tidak Ada tagihan"
+                                        : snapshot.data.namaTagihan,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: DataColors.primary,
+                                    ),
+                                  )
+                                ],
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Tagihan Cicilan",
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
-                        color: DataColors.primary800,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    (snapshot.data.tagihanCicilan.contentCicilan != 0)
-                        ? ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: 150.sp, minHeight: 10.sp),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  snapshot.data.tagihanCicilan.data.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return tagihancicilan(
-                                    nama: snapshot
-                                        .data.tagihanCicilan.data[index].nama,
-                                    nominal: snapshot.data.tagihanCicilan
-                                        .data[index].nominal,
-                                    total: snapshot
-                                        .data.tagihanCicilan.data[index].total,
-                                    terbayar: snapshot.data.tagihanCicilan
-                                        .data[index].terbayar);
-                              },
-                            ),
-                          )
-                        : tidakadatagihan(),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Tagihan Semester",
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
-                        color: DataColors.primary800,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    (snapshot.data.tagihanSemester.contentTagihan != 0)
-                        ? ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: 150.sp, minHeight: 10.sp),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  snapshot.data.tagihanSemester.data.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return tagihansemester(
-                                    semester: snapshot.data.tagihanSemester
-                                        .data[index].semester,
-                                    nominal: snapshot.data.tagihanSemester
-                                        .data[index].nominal,
-                                    total: snapshot
-                                        .data.tagihanSemester.data[index].total,
-                                    terbayar: snapshot.data.tagihanSemester
-                                        .data[index].terbayar);
-                              },
-                            ),
-                          )
-                        : tidakadatagihan(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Tagihan Sedang Aktif",
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
-                        color: DataColors.primary800,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    (snapshot.data.tagihanActive.activeTagihan != 0)
-                        ? ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: 170.sp, minHeight: 10.sp),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  snapshot.data.tagihanActive.data.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Get.to(PreviewPembayaranPage(), arguments: [
-                                      snapshot.data.tagihanActive.data[index]
-                                          .codeTrans,
-                                      (snapshot.data.tagihanActive.data[index]
-                                              .nominal)
-                                          .toString()
-                                    ]);
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Tagihan Cicilan",
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
+                            color: DataColors.primary800,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        (snapshot.data.tagihanCicilan.contentCicilan != 0)
+                            ? ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxHeight: 150.sp, minHeight: 10.sp),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      snapshot.data.tagihanCicilan.data.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return tagihancicilan(
+                                        nama: snapshot.data.tagihanCicilan
+                                            .data[index].nama,
+                                        nominal: snapshot.data.tagihanCicilan
+                                            .data[index].nominal,
+                                        total: snapshot.data.tagihanCicilan
+                                            .data[index].total,
+                                        terbayar: snapshot.data.tagihanCicilan
+                                            .data[index].terbayar);
                                   },
-                                  child: TagihanExpired(
-                                      codeTrans: snapshot.data.tagihanActive
-                                          .data[index].codeTrans,
-                                      nominal: snapshot.data.tagihanActive
-                                          .data[index].nominal,
-                                      tanggaldibuat: snapshot.data.tagihanActive
-                                          .data[index].tanggalDibuat,
-                                      tanggalexpired: snapshot
-                                          .data
-                                          .tagihanActive
-                                          .data[index]
-                                          .tanggalExpired),
-                                );
-                              },
-                            ),
-                          )
-                        : tidakadatagihan(),
-                    SizedBox(
-                      height: 20,
+                                ),
+                              )
+                            : const tidakadatagihan(),
+
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Tagihan Semester",
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
+                            color: DataColors.primary800,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        (snapshot.data.tagihanSemester.contentTagihan != 0)
+                            ? ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxHeight: 150.sp, minHeight: 10.sp),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      snapshot.data.tagihanSemester.data.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return tagihansemester(
+                                        semester: snapshot.data.tagihanSemester
+                                            .data[index].semester,
+                                        nominal: snapshot.data.tagihanSemester
+                                            .data[index].nominal,
+                                        total: snapshot.data.tagihanSemester
+                                            .data[index].total,
+                                        terbayar: snapshot.data.tagihanSemester
+                                            .data[index].terbayar);
+                                  },
+                                ),
+                              )
+                            : const tidakadatagihan(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Tagihan Sedang Aktif",
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
+                            color: DataColors.primary800,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        (snapshot.data.tagihanActive.activeTagihan != 0)
+                            ? ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxHeight: 170.sp, minHeight: 10.sp),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      snapshot.data.tagihanActive.data.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.to(PreviewPembayaranPage(),
+                                            arguments: [
+                                              snapshot.data.tagihanActive
+                                                  .data[index].codeTrans,
+                                              (snapshot.data.tagihanActive
+                                                      .data[index].nominal)
+                                                  .toString()
+                                            ]);
+                                      },
+                                      child: TagihanExpired(
+                                          codeTrans: snapshot.data.tagihanActive
+                                              .data[index].codeTrans,
+                                          nominal: snapshot.data.tagihanActive
+                                              .data[index].nominal,
+                                          tanggaldibuat: snapshot
+                                              .data
+                                              .tagihanActive
+                                              .data[index]
+                                              .tanggalDibuat,
+                                          tanggalexpired: snapshot
+                                              .data
+                                              .tagihanActive
+                                              .data[index]
+                                              .tanggalExpired),
+                                    );
+                                  },
+                                ),
+                              )
+                            : const tidakadatagihan(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Tagihan Telah Expired",
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w600,
+                            color: DataColors.primary800,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        (snapshot.data.tagihanExpired.tagihanExpired != 0)
+                            ? ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxHeight: 170.sp, minHeight: 10.sp),
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      snapshot.data.tagihanExpired.data.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return TagihanExpired(
+                                        codeTrans: snapshot.data.tagihanExpired
+                                            .data[index].codeTrans,
+                                        nominal: snapshot.data.tagihanExpired
+                                            .data[index].nominal,
+                                        tanggaldibuat: snapshot
+                                            .data
+                                            .tagihanExpired
+                                            .data[index]
+                                            .tanggalDibuat,
+                                        tanggalexpired: snapshot
+                                            .data
+                                            .tagihanExpired
+                                            .data[index]
+                                            .tanggalExpired);
+                                  },
+                                ),
+                              )
+                            : const tidakadatagihan(),
+                        //TagihanExpired()
+                      ],
                     ),
-                    Text(
-                      "Tagihan Telah Expired",
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.w600,
-                        color: DataColors.primary800,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    (snapshot.data.tagihanExpired.tagihanExpired != 0)
-                        ? ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: 170.sp, minHeight: 10.sp),
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  snapshot.data.tagihanExpired.data.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return TagihanExpired(
-                                    codeTrans: snapshot.data.tagihanExpired
-                                        .data[index].codeTrans,
-                                    nominal: snapshot.data.tagihanExpired
-                                        .data[index].nominal,
-                                    tanggaldibuat: snapshot.data.tagihanExpired
-                                        .data[index].tanggalDibuat,
-                                    tanggalexpired: snapshot.data.tagihanExpired
-                                        .data[index].tanggalExpired);
-                              },
-                            ),
-                          )
-                        : tidakadatagihan(),
-                    //TagihanExpired()
-                  ],
-                ),
-              );
-            } else {
-              return Center(child: Text("Tidak Ada Data"));
+                  );
+                } else {
+                  return const Center(child: Text("Tidak Ada Data"));
+                }
             }
           }),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 40),
-        margin: EdgeInsets.only(bottom: 20, top: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        margin: const EdgeInsets.only(bottom: 20, top: 20),
         child: ElevatedButton(
           onPressed: () {
             Get.to(SemuaTagihanPage());
@@ -284,9 +302,9 @@ class TagihanPage extends StatelessWidget {
             shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(14.0),
             ),
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
           ),
-          child: Text(
+          child: const Text(
             'Buat Tagihan',
             style: TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -304,7 +322,7 @@ class tidakadatagihan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12), color: DataColors.blusky),
       child: Row(
@@ -345,7 +363,7 @@ class tagihancicilan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
+    final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
     return Padding(
       padding: EdgeInsets.only(right: 8.0.sp),
       child: Container(
@@ -364,7 +382,7 @@ class tagihancicilan extends StatelessWidget {
                 color: DataColors.primary400,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
@@ -375,7 +393,7 @@ class tagihancicilan extends StatelessWidget {
                 color: DataColors.primary800,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Column(
@@ -383,7 +401,7 @@ class tagihancicilan extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: DataColors.backgroundbutton),
@@ -399,7 +417,7 @@ class tagihancicilan extends StatelessWidget {
                   height: 10.sp,
                 ),
                 Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: DataColors.backgroundbutton),
@@ -436,11 +454,11 @@ class TagihanExpired extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
+    final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: DataColors.blusky),
         child: Column(
@@ -448,7 +466,7 @@ class TagihanExpired extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(6),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: HexColor("#C3D8F6")),
@@ -460,7 +478,7 @@ class TagihanExpired extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -471,11 +489,11 @@ class TagihanExpired extends StatelessWidget {
                   color: DataColors.primary800,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
-                padding: EdgeInsets.all(6),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: DataColors.primary400),
@@ -487,11 +505,11 @@ class TagihanExpired extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
-                padding: EdgeInsets.all(6),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: DataColors.primary800),
@@ -524,7 +542,7 @@ class tagihansemester extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatCurrency = new NumberFormat.simpleCurrency(locale: 'id_ID');
+    final formatCurrency = NumberFormat.simpleCurrency(locale: 'id_ID');
     return Padding(
       padding: EdgeInsets.only(right: 8.0.sp),
       child: Container(
@@ -543,7 +561,7 @@ class tagihansemester extends StatelessWidget {
                 color: DataColors.primary400,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
@@ -554,7 +572,7 @@ class tagihansemester extends StatelessWidget {
                 color: DataColors.primary800,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Column(
@@ -562,7 +580,7 @@ class tagihansemester extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: DataColors.backgroundbutton),
@@ -578,7 +596,7 @@ class tagihansemester extends StatelessWidget {
                   height: 10.sp,
                 ),
                 Container(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
                       color: DataColors.backgroundbutton),

@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:gostrada/app/data/models/bankmodel.dart';
 import 'package:gostrada/app/data/models/tagihan_m.dart';
 import 'package:http/http.dart' as http;
@@ -54,7 +53,7 @@ class TagihanController extends GetxController {
         return null;
       } else {
         var result = TagihanModel.fromJson(databody);
-        print(response.body);
+
         return result;
       }
     }
@@ -96,55 +95,6 @@ class TagihanController extends GetxController {
     }
   }
 
-  loadtagihan(nim, credit_id) async {
-    final Map<String, dynamic> dataBody = {
-      TagihanMo.nim: nim,
-      TagihanMo.credit_id: credit_id,
-    };
-    var response = await http.post(
-        Uri.parse("https://sia.iik-strada.ac.id/mobile/keuangan/buat_tagihan"),
-        body: dataBody);
-
-    if (response.statusCode == 200) {
-      var databody = jsonDecode(response.body);
-      // print(DataUser['data']);
-
-      //var test = jsonDecode(DataUser['data']);
-      //print(test);
-
-      // List list =
-      //result2['data'].map((data) => DataModel.fromJson(data)).toList();
-      // print(result2);
-      if (databody['error'] == true) {
-        //show error
-        return null;
-      } else {
-        var result = BuatTagihanModel.fromJson(databody);
-        if (result.data![0].idCredit == 0) {
-          return;
-        }
-        int idx = data.indexWhere(
-            (element) => element.data![0].idCredit == result.data![0].idCredit);
-        if (idx < 0) {
-          data.add(result);
-          totaltagihan.value += result.data![0].nominal;
-
-          controllers.add(TextEditingController(
-              text: (result.data![0].nominal).toString()));
-          controllers2.add(TextEditingController());
-          isVisible.add(false);
-
-          update();
-
-          //print(data[idx - 1].data[0].nominal);
-        }
-        print(response.body);
-
-        return result;
-      }
-    }
-  }
-
   loadsemuatagihan(nim) async {
     final Map<String, dynamic> dataBody = {
       TagihanMo.nim: nim,
@@ -152,7 +102,7 @@ class TagihanController extends GetxController {
     var response = await http.post(
         Uri.parse("https://sia.iik-strada.ac.id/mobile/keuangan/buat_tagihan"),
         body: dataBody);
-    print(nim);
+
     if (response.statusCode == 200) {
       var databody = jsonDecode(response.body);
 
@@ -171,7 +121,6 @@ class TagihanController extends GetxController {
         for (var i = 0; i < result.data!.length; i++) {
           datadatum.add(result.data![i]);
         }
-        print(response.body);
 
         update();
         return result;
@@ -191,8 +140,7 @@ class TagihanController extends GetxController {
       BuatTagihan.id_credit: id_credit,
       BuatTagihan.bayar: bayar,
     };
-    print("id_biaya $id_biaya");
-    print("id_credit $id_credit");
+
     var response = await http.post(
         Uri.parse("https://sia.iik-strada.ac.id/mobile/keuangan/save_tagihan"),
         body: dataBody);
@@ -201,14 +149,13 @@ class TagihanController extends GetxController {
       var databody = jsonDecode(response.body);
 
       if (databody['error'] == true) {
-        print(response.body);
         return null;
       } else {
         var result = SaveTagihanModel.fromJson(databody);
         Get.snackbar('Hi', 'Tagihan Berhasil Disimpan');
-        print(result.codeTrans);
+
         Get.to(PreviewPembayaranPage(),
-            arguments: [result.codeTrans, totaltagihan]);
+            arguments: [result.codeTrans, totaltagihan.value]);
       }
     }
   }
@@ -221,10 +168,7 @@ class TagihanController extends GetxController {
       CodeVA.name: name,
       CodeVA.code_trans: code_trans,
     };
-    print(nim);
-    print(total_payment);
-    print(name);
-    print(code_trans);
+
     var response = await http.post(
         Uri.parse(
             "https://sia.iik-strada.ac.id/mobile/payment/create_ecollection"),
@@ -235,11 +179,10 @@ class TagihanController extends GetxController {
 
       if (databody['error'] == true) {
         //show error
-        print(response.body);
         return null;
       } else {
         var result = CodeVaModel.fromJson(databody);
-        print(response.body);
+
         return result;
       }
     }
@@ -254,11 +197,11 @@ class TagihanController extends GetxController {
 
       if (databody['error'] == true) {
         //show error
-        print(response.body);
+
         return null;
       } else {
         var result = BankModel.fromJson(databody);
-        print(response.body);
+
         return result;
       }
     }

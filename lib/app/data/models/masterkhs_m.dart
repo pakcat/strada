@@ -1,45 +1,51 @@
 // To parse this JSON data, do
 //
-//     final masterKhs = masterKhsFromJson(jsonString);
+//     final masterKhsModel = masterKhsModelFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-MasterKhs masterKhsFromJson(String str) => MasterKhs.fromJson(json.decode(str));
+MasterKhsModel masterKhsModelFromJson(String str) =>
+    MasterKhsModel.fromJson(json.decode(str));
 
-String masterKhsToJson(MasterKhs data) => json.encode(data.toJson());
-
-class MasterKhs {
-  MasterKhs({
-    required this.nim,
-    required this.name,
-    required this.angkatan,
-    required this.fakultas,
-    required this.prodi,
-    required this.semester,
+class MasterKhsModel {
+  MasterKhsModel({
+    required this.semesterAktif,
+    required this.allSemester,
+    required this.error,
   });
 
-  String nim;
-  String name;
-  String angkatan;
-  dynamic fakultas;
-  String prodi;
-  Map semester;
+  final SemesterAktif? semesterAktif;
+  final List<SemesterAktif>? allSemester;
+  final bool error;
 
-  factory MasterKhs.fromJson(Map<String, dynamic> json) => MasterKhs(
-        nim: json["nim"],
-        name: json["name"],
-        angkatan: json["angkatan"],
-        fakultas: json["fakultas"],
-        prodi: json["prodi"],
-        semester: jsonDecode(json["semester"]),
+  factory MasterKhsModel.fromJson(Map<String, dynamic> json) => MasterKhsModel(
+        semesterAktif: json["semester_aktif"] == null
+            ? null
+            : SemesterAktif.fromJson(json["semester_aktif"]),
+        allSemester: json["all_semester"] == null
+            ? null
+            : List<SemesterAktif>.from(
+                json["all_semester"].map((x) => SemesterAktif.fromJson(x))),
+        error: json["error"] == null ? null : json["error"],
       );
+}
 
-  Map<String, dynamic> toJson() => {
-        "nim": nim,
-        "name": name,
-        "angkatan": angkatan,
-        "fakultas": fakultas,
-        "prodi": prodi,
-        "semester": semester,
-      };
+class SemesterAktif {
+  SemesterAktif({
+    required this.semester,
+    required this.ips,
+    required this.periodeAktif,
+  });
+
+  final String semester;
+  final String ips;
+  final String periodeAktif;
+
+  factory SemesterAktif.fromJson(Map<String, dynamic> json) => SemesterAktif(
+        semester: json["semester"] == null ? null : json["semester"],
+        ips: json["ips"] == null ? null : json["ips"],
+        periodeAktif:
+            json["periode_aktif"] == null ? null : json["periode_aktif"],
+      );
 }
